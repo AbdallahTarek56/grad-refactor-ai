@@ -1,0 +1,622 @@
+[
+  {
+    "key": "T01",
+    "phase": "P1",
+    "area": "coordination",
+    "title": "Run kickoff and record hardware and availability",
+    "outcome": "Confirm the team accounts, development and training resources, and weekly availability.",
+    "acceptance": [
+      "Record OS, CPU, RAM, GPU and VRAM for available machines without private identifiers.",
+      "Confirm the workstream ownership and weekly availability.",
+      "Confirm the team start date, official deadline, and university report requirements."
+    ],
+    "dependencies": [],
+    "priority": "P0",
+    "owner": "abdulrhmanmagdy1",
+    "window": "Days 1-2 (Week 1)"
+  },
+  {
+    "key": "T02",
+    "phase": "P1",
+    "area": "environment",
+    "title": "Reproduce the environment on all team machines",
+    "outcome": "Make the same foundation service and checks runnable by every member.",
+    "acceptance": [
+      "Run uv sync --frozen on the available team machines.",
+      "Post sanitized doctor and pytest results.",
+      "Record and resolve operating-system-specific setup problems."
+    ],
+    "dependencies": [
+      "T01"
+    ],
+    "priority": "P0",
+    "owner": "abdulrhmanmagdy1",
+    "window": "Days 1-2 (Week 1)"
+  },
+  {
+    "key": "T03",
+    "phase": "P1",
+    "area": "research",
+    "title": "Review related work and candidate data sources",
+    "outcome": "Identify relevant primary studies and usable data sources.",
+    "acceptance": [
+      "Prepare a reading table with links, methods, metrics, and limitations.",
+      "Identify comparisons that fit the available resources.",
+      "Record candidate datasets and their licenses."
+    ],
+    "dependencies": [
+      "T01"
+    ],
+    "priority": "P0",
+    "owner": "shahd-abdelhay",
+    "window": "Days 1-2 (Week 1)"
+  },
+  {
+    "key": "T04",
+    "phase": "P1",
+    "area": "model",
+    "title": "Benchmark candidate models on the demonstration machine",
+    "outcome": "Select a model candidate using measurements.",
+    "acceptance": [
+      "Measure latency, memory use, and small task examples for suitable candidates.",
+      "Record license, exact revision, and hardware.",
+      "Recommend a model and input limit with supporting results."
+    ],
+    "dependencies": [
+      "T01"
+    ],
+    "priority": "P0",
+    "owner": "abdelrhmanadel200",
+    "window": "Days 1-2 (Week 1)"
+  },
+  {
+    "key": "T05",
+    "phase": "P1",
+    "area": "training",
+    "title": "Run a small LoRA feasibility experiment",
+    "outcome": "Verify that a small adapter can be trained, saved, reloaded, and resumed.",
+    "acceptance": [
+      "Pin a training environment compatible with the actual GPU.",
+      "Smoke-test the training script on the GPU.",
+      "Save and reload an adapter; record time and memory and a fallback if training is infeasible."
+    ],
+    "dependencies": [
+      "T04"
+    ],
+    "priority": "P0",
+    "owner": "abdelrhmanadel200",
+    "window": "Days 1-2 (Week 1)"
+  },
+  {
+    "key": "T06",
+    "phase": "P1",
+    "area": "requirements",
+    "title": "Agree on Python scope and supported refactoring types",
+    "outcome": "Select one bounded Python refactoring type and state what is outside the three-week release.",
+    "acceptance": [
+      "Prepare before/after examples and reference tests for each task.",
+      "Update the proposal and requirements.",
+      "Set measured input, retry, and resource limits."
+    ],
+    "dependencies": [
+      "T03",
+      "T04"
+    ],
+    "priority": "P0",
+    "owner": "abdallah414",
+    "window": "Days 1-2 (Week 1)"
+  },
+  {
+    "key": "R1",
+    "phase": "P1",
+    "area": "supervisor",
+    "title": "Supervisor review: scope and feasibility",
+    "outcome": "Present the proposal and feasibility evidence and agree on the scope.",
+    "acceptance": [
+      "Prepare a short summary, experiment links, and specific questions.",
+      "Record supervisor feedback, agreed decisions, and pending questions.",
+      "Create follow-up Issues and update the plan."
+    ],
+    "dependencies": [
+      "T02",
+      "T05",
+      "T06"
+    ],
+    "priority": "P0",
+    "owner": "abdulrhmanmagdy1",
+    "window": "Days 1-2 (Week 1)"
+  },
+  {
+    "key": "T07",
+    "phase": "P2",
+    "area": "data",
+    "title": "Curate a licensed sample dataset",
+    "outcome": "Prepare task-appropriate examples with a provenance manifest.",
+    "acceptance": [
+      "Record source, license, inclusion criteria, and exclusion criteria.",
+      "Review a sample for valid code and behavior-preserving changes.",
+      "Estimate a feasible dataset size from evidence."
+    ],
+    "dependencies": [
+      "R1"
+    ],
+    "priority": "P0",
+    "owner": "shahd-abdelhay",
+    "window": "Days 3-5 (Week 1)"
+  },
+  {
+    "key": "T08",
+    "phase": "P2",
+    "area": "data",
+    "title": "Split data and check leakage and duplicates",
+    "outcome": "Produce reproducible splits separated by source.",
+    "acceptance": [
+      "Create train, validation, and test splits by source_group.",
+      "Check exact and near-duplicates and record curation decisions.",
+      "Save hashes and a split manifest and freeze the test set."
+    ],
+    "dependencies": [
+      "T07"
+    ],
+    "priority": "P0",
+    "owner": "shahd-abdelhay",
+    "window": "Days 3-5 (Week 1)"
+  },
+  {
+    "key": "T09",
+    "phase": "P2",
+    "area": "evaluation",
+    "title": "Implement and measure the single-role baseline",
+    "outcome": "Record baseline outputs from the original model.",
+    "acceptance": [
+      "Provide an inference script with fixed settings, error records, and timing.",
+      "Use an initial task rubric and reference tests.",
+      "Do not use the test set to tune prompts."
+    ],
+    "dependencies": [
+      "T04",
+      "T06",
+      "T08"
+    ],
+    "priority": "P0",
+    "owner": "abdelrhmanadel200",
+    "window": "Days 3-5 (Week 1)"
+  },
+  {
+    "key": "T10",
+    "phase": "P2",
+    "area": "evaluation",
+    "title": "Freeze the comparison protocol and numerical targets",
+    "outcome": "Separate model adaptation, role coordination, and resource effects.",
+    "acceptance": [
+      "Define groups A/B/C/D and their resource budgets.",
+      "Specify measures, denominators, and timeout handling.",
+      "Record targets after the baseline and before final test evaluation."
+    ],
+    "dependencies": [
+      "T09"
+    ],
+    "priority": "P0",
+    "owner": "shahd-abdelhay",
+    "window": "Days 3-5 (Week 1)"
+  },
+  {
+    "key": "T11",
+    "phase": "P2",
+    "area": "architecture",
+    "title": "Specify API and role contracts and run states",
+    "outcome": "Agree on schemas before parallel implementation.",
+    "acceptance": [
+      "Document requests, results, errors, and run-state transitions.",
+      "Record the workflow and storage decisions.",
+      "Add example JSON and contract tests."
+    ],
+    "dependencies": [
+      "R1"
+    ],
+    "priority": "P0",
+    "owner": "abdulrhmanmagdy1",
+    "window": "Days 3-5 (Week 1)"
+  },
+  {
+    "key": "R2",
+    "phase": "P2",
+    "area": "supervisor",
+    "title": "Supervisor review: data and baseline",
+    "outcome": "Review data quality, baseline results, and planned comparisons.",
+    "acceptance": [
+      "Present samples, licensing, split checks, and baseline results.",
+      "Review targets and the evaluation method.",
+      "Record decisions and follow-up Issues."
+    ],
+    "dependencies": [
+      "T08",
+      "T10",
+      "T11"
+    ],
+    "priority": "P0",
+    "owner": "abdulrhmanmagdy1",
+    "window": "Days 3-5 (Week 1)"
+  },
+  {
+    "key": "T12",
+    "phase": "P3",
+    "area": "model",
+    "title": "Implement a replaceable local model provider",
+    "outcome": "Use one interface for the original model and adapted model.",
+    "acceptance": [
+      "Load a pinned model revision.",
+      "Bound generation and return clear timeout and inference errors.",
+      "Verify that an adapter can replace the baseline without changing the API contract."
+    ],
+    "dependencies": [
+      "R2",
+      "T05"
+    ],
+    "priority": "P0",
+    "owner": "abdelrhmanadel200",
+    "window": "Days 6-10 (Weeks 1-2)"
+  },
+  {
+    "key": "T13",
+    "phase": "P3",
+    "area": "agents",
+    "title": "Implement structured analysis-role outputs",
+    "outcome": "Analyze the agreed task types using the shared schema.",
+    "acceptance": [
+      "Return valid JSON with the finding type, location, and supporting reason.",
+      "Cover invalid code and code with no supported finding.",
+      "Enforce a documented inference-call limit."
+    ],
+    "dependencies": [
+      "T12",
+      "T11"
+    ],
+    "priority": "P0",
+    "owner": "abdallah414",
+    "window": "Days 6-10 (Weeks 1-2)"
+  },
+  {
+    "key": "T14",
+    "phase": "P3",
+    "area": "agents",
+    "title": "Implement bounded refactoring proposals",
+    "outcome": "Generate a proposed change and reason without executing it.",
+    "acceptance": [
+      "Return code, a reason, and task type, or an explicit failure.",
+      "Use the agreed task, context, and input limits.",
+      "Test syntax failures and schema-invalid model outputs."
+    ],
+    "dependencies": [
+      "T12",
+      "T11"
+    ],
+    "priority": "P0",
+    "owner": "abdallah414",
+    "window": "Days 6-10 (Weeks 1-2)"
+  },
+  {
+    "key": "T15",
+    "phase": "P3",
+    "area": "backend",
+    "title": "Implement run API and state records",
+    "outcome": "Expose traceable runs and clear failure handling.",
+    "acceptance": [
+      "Implement the agreed contracts and failure states.",
+      "Record settings, model revisions, and stage durations.",
+      "Use a clearly identified fake provider for GPU-independent integration tests."
+    ],
+    "dependencies": [
+      "T11",
+      "T12"
+    ],
+    "priority": "P0",
+    "owner": "abdulrhmanmagdy1",
+    "window": "Days 6-10 (Weeks 1-2)"
+  },
+  {
+    "key": "T16",
+    "phase": "P3",
+    "area": "frontend",
+    "title": "Build the initial code-input and result interface",
+    "outcome": "Connect one usable input-to-result interaction to the service.",
+    "acceptance": [
+      "Show input, waiting, result, and failure states.",
+      "Present a readable diff and explanation.",
+      "Document local frontend setup and operation."
+    ],
+    "dependencies": [
+      "T11",
+      "T15"
+    ],
+    "priority": "P0",
+    "owner": "d5ania",
+    "window": "Days 6-10 (Weeks 1-2)"
+  },
+  {
+    "key": "T17",
+    "phase": "P3",
+    "area": "training",
+    "title": "Run and record the first fine-tuning experiment",
+    "outcome": "Save a reloadable adapter and validation results.",
+    "acceptance": [
+      "Use only train records for updates and validation records for selection.",
+      "Record settings, manifests, and a training dependency lock.",
+      "Save the adapter and checksum and compare with the baseline on validation data."
+    ],
+    "dependencies": [
+      "R2",
+      "T05",
+      "T08"
+    ],
+    "priority": "P0",
+    "owner": "abdelrhmanadel200",
+    "window": "Days 6-10 (Weeks 1-2)"
+  },
+  {
+    "key": "T18",
+    "phase": "P3",
+    "area": "integration",
+    "title": "Demonstrate an early end-to-end case",
+    "outcome": "Show one complete case from input to result.",
+    "acceptance": [
+      "Run the interface, API, and model together.",
+      "Show original and proposed code with the available check results.",
+      "Record incomplete review features explicitly."
+    ],
+    "dependencies": [
+      "T13",
+      "T14",
+      "T16"
+    ],
+    "priority": "P0",
+    "owner": "abdulrhmanmagdy1",
+    "window": "Days 6-10 (Weeks 1-2)"
+  },
+  {
+    "key": "R3",
+    "phase": "P3",
+    "area": "supervisor",
+    "title": "Supervisor review: integration and first training run",
+    "outcome": "Present the complete path and initial training comparison.",
+    "acceptance": [
+      "Show a demonstration and actual experiment settings and results.",
+      "Explain observed failures and resource constraints.",
+      "Record decisions and next-phase priorities."
+    ],
+    "dependencies": [
+      "T17",
+      "T18"
+    ],
+    "priority": "P0",
+    "owner": "abdulrhmanmagdy1",
+    "window": "Days 6-10 (Weeks 1-2)"
+  },
+  {
+    "key": "T19",
+    "phase": "P4",
+    "area": "agents",
+    "title": "Implement review and role coordination",
+    "outcome": "Coordinate the roles with bounded correction attempts.",
+    "acceptance": [
+      "Keep the agent verdict separate from deterministic check results.",
+      "Use a bounded correction path and an explicit stop reason.",
+      "Test timeouts and failures in each role."
+    ],
+    "dependencies": [
+      "R3",
+      "T13",
+      "T14"
+    ],
+    "priority": "P0",
+    "owner": "abdallah414",
+    "window": "Days 11-15 (Weeks 2-3)"
+  },
+  {
+    "key": "T20",
+    "phase": "P4",
+    "area": "verification",
+    "title": "Design and verify a separate runner for trusted examples",
+    "outcome": "Run reference tests outside the API with reviewed isolation controls.",
+    "acceptance": [
+      "Exclude network, secrets, host access, and the Docker socket.",
+      "Enforce time, memory, CPU, and process-cleanup limits.",
+      "Complete the runner safety checklist and isolation tests before enabling execution."
+    ],
+    "dependencies": [
+      "R3"
+    ],
+    "priority": "P0",
+    "owner": "abdallah414",
+    "window": "Days 11-15 (Weeks 2-3)"
+  },
+  {
+    "key": "T21",
+    "phase": "P4",
+    "area": "integration",
+    "title": "Integrate verification and failure results into the interface",
+    "outcome": "Present evidence without a misleading success state.",
+    "acceptance": [
+      "Show syntax, tests, and review as separate results.",
+      "Handle missing reference tests explicitly.",
+      "Verify model and runner failures without modifying original input."
+    ],
+    "dependencies": [
+      "T19",
+      "T20",
+      "T16"
+    ],
+    "priority": "P0",
+    "owner": "abdulrhmanmagdy1",
+    "window": "Days 11-15 (Weeks 2-3)"
+  },
+  {
+    "key": "T22",
+    "phase": "P4",
+    "area": "model",
+    "title": "Select and integrate the model using validation data",
+    "outcome": "Use a justified candidate rather than automatically using the latest run.",
+    "acceptance": [
+      "Record the selection rule and validation evidence.",
+      "Retain the original model if adaptation does not help, with an explanation.",
+      "Update the model card and artifact reference."
+    ],
+    "dependencies": [
+      "T17",
+      "T19"
+    ],
+    "priority": "P0",
+    "owner": "abdelrhmanadel200",
+    "window": "Days 11-15 (Weeks 2-3)"
+  },
+  {
+    "key": "T23",
+    "phase": "P4",
+    "area": "testing",
+    "title": "Verify first-release acceptance criteria",
+    "outcome": "Trace agreed P0 behavior to test evidence.",
+    "acceptance": [
+      "Provide a requirement, test, and result matrix.",
+      "Cover errors, input limits, and timeouts.",
+      "Verify diff, download, and preservation of the original input."
+    ],
+    "dependencies": [
+      "T21",
+      "T22"
+    ],
+    "priority": "P0",
+    "owner": "abdallah414",
+    "window": "Days 11-15 (Weeks 2-3)"
+  },
+  {
+    "key": "R4",
+    "phase": "P4",
+    "area": "supervisor",
+    "title": "Supervisor review: integrated first release",
+    "outcome": "Review acceptance examples and freeze core features.",
+    "acceptance": [
+      "Show the acceptance demonstration and remaining defects.",
+      "Review limitations and the final evaluation plan.",
+      "Record decisions and repair Issues."
+    ],
+    "dependencies": [
+      "T23"
+    ],
+    "priority": "P0",
+    "owner": "abdulrhmanmagdy1",
+    "window": "Days 11-15 (Weeks 2-3)"
+  },
+  {
+    "key": "T24",
+    "phase": "P5",
+    "area": "evaluation",
+    "title": "Run the independent final evaluation",
+    "outcome": "Evaluate groups A/B/C/D on the frozen test set.",
+    "acceptance": [
+      "Retain every attempt, including failures and timeouts.",
+      "Measure latency and resource use alongside quality.",
+      "Assess a sample with the fixed rubric and explain ambiguous cases and failure patterns."
+    ],
+    "dependencies": [
+      "R4",
+      "T10",
+      "T22"
+    ],
+    "priority": "P0",
+    "owner": "shahd-abdelhay",
+    "window": "Days 16-21 (Week 3)"
+  },
+  {
+    "key": "T25",
+    "phase": "P5",
+    "area": "testing",
+    "title": "Verify clean setup and fix critical defects",
+    "outcome": "Reproduce the release from clean setup instructions.",
+    "acceptance": [
+      "Complete a clean-clone installation in a fresh environment; prefer a second machine, and explicitly record whether different hardware was actually tested.",
+      "Fix critical defects without tuning on the test set.",
+      "Update setup instructions and measured hardware limits."
+    ],
+    "dependencies": [
+      "R4"
+    ],
+    "priority": "P0",
+    "owner": "abdulrhmanmagdy1",
+    "window": "Days 16-21 (Week 3)"
+  },
+  {
+    "key": "T26",
+    "phase": "P5",
+    "area": "documentation",
+    "title": "Write the academic report and update the guides",
+    "outcome": "Prepare a report grounded in actual work and results.",
+    "acceptance": [
+      "Cover the problem, related work, method, design, implementation, experiments, and limitations.",
+      "Trace reported figures and numbers to retained evidence.",
+      "Update the developer guide, user guide, and model card."
+    ],
+    "dependencies": [
+      "T24",
+      "T25"
+    ],
+    "priority": "P0",
+    "owner": "d5ania",
+    "window": "Days 16-21 (Week 3)"
+  },
+  {
+    "key": "T27",
+    "phase": "P5",
+    "area": "delivery",
+    "title": "Prepare the presentation and repeatable demonstration",
+    "outcome": "Prepare a team presentation and backup recording.",
+    "acceptance": [
+      "Use a stable demonstration with a success and failure example.",
+      "Agree on speaking roles and rehearse questions.",
+      "Store a small permitted backup recording in the GitHub release within quota."
+    ],
+    "dependencies": [
+      "T24",
+      "T25"
+    ],
+    "priority": "P0",
+    "owner": "d5ania",
+    "window": "Days 16-21 (Week 3)"
+  },
+  {
+    "key": "T28",
+    "phase": "P5",
+    "area": "delivery",
+    "title": "Publish the initial delivery release",
+    "outcome": "Publish an identifiable release and its supporting materials.",
+    "acceptance": [
+      "Create a tag, release notes, and artifact checksums.",
+      "Respect model/data licenses and storage limits.",
+      "Complete the delivery checklist and link the report and demonstration."
+    ],
+    "dependencies": [
+      "T26",
+      "T27"
+    ],
+    "priority": "P0",
+    "owner": "abdulrhmanmagdy1",
+    "window": "Days 16-21 (Week 3)"
+  },
+  {
+    "key": "R5",
+    "phase": "P5",
+    "area": "supervisor",
+    "title": "Supervisor review: initial delivery and next priorities",
+    "outcome": "Record delivery feedback and prioritize subsequent development.",
+    "acceptance": [
+      "Present the release, findings, and limitations.",
+      "Record the supervisor review.",
+      "Prioritize follow-up work without assuming a larger scope."
+    ],
+    "dependencies": [
+      "T28"
+    ],
+    "priority": "P0",
+    "owner": "abdulrhmanmagdy1",
+    "window": "Days 16-21 (Week 3)"
+  }
+]

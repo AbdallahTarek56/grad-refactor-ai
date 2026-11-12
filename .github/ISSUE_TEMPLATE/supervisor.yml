@@ -1,0 +1,21 @@
+name: Supervisor review
+description: Review a phase outcome and record decisions
+title: "[Review] "
+labels: [supervisor]
+body:
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Phase, deliverables, demonstration, and results
+    validations:
+      required: true
+  - type: textarea
+    id: questions
+    attributes:
+      label: Questions and decisions needed
+    validations:
+      required: true
+  - type: textarea
+    id: decisions
+    attributes:
+      label: Feedback, decisions, and follow-up Issues

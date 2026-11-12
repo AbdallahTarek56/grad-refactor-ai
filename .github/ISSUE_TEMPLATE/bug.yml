@@ -1,0 +1,16 @@
+name: Bug report
+description: A reproducible defect
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps, expected behavior, and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment, version, and evidence
+      description: Do not attach credentials or private data.

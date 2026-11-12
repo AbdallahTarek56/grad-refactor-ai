@@ -1,0 +1,21 @@
+name: Implementation or research task
+description: A task with a defined outcome and acceptance criteria
+title: "[Task] "
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Purpose and deliverable
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria and verification
+      placeholder: Include checkable criteria and relevant requirement IDs.
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and task owner
